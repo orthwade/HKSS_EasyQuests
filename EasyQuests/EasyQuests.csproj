@@ -1,0 +1,97 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Game and Unity DLLs -->
+    <Reference Include="Assembly-CSharp">
+      <HintPath>libs\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>libs\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>libs\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <!-- Optional Unity modules if needed -->
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>libs\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>libs\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- BepInEx and Harmony -->
+    <Reference Include="BepInEx">
+      <HintPath>libs\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="ConfigurationManager">
+      <HintPath>libs\ConfigurationManager\ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>libs\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="PlayMaker">
+      <HintPath>libs\PlayMaker.dll</HintPath>
+    </Reference>
+    <Reference Include="TeamCherry.SharedUtils">
+      <HintPath>libs\TeamCherry.SharedUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>libs\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInExConfigManager.Mono.Patcher">
+      <HintPath>libs\BepInExConfigManager.Mono.Patcher.dll</HintPath>
+    </Reference>
+    <!-- ImageConversionModule intentionally omitted to avoid netstandard 2.1 vs 2.0 conflict (CS1705). -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="22.7.31.1" />
+  </ItemGroup>
+  <PropertyGroup>
+    <!-- Read from environment variable SILKSONG_PATH if available -->
+    <SilksongPath>$(SILKSONG_PATH)</SilksongPath>
+  </PropertyGroup>
+
+  <Target Name="CopyToSteam" AfterTargets="Build" Condition="'$(SilksongPath)' != ''">
+    <!-- Check if Hollow Knight Silksong.exe is running -->
+    <Exec Command="powershell -Command &quot;if (Get-Process -Name 'Hollow Knight Silksong' -ErrorAction SilentlyContinue) { Stop-Process -Name 'Hollow Knight Silksong' -Force -PassThru | Wait-Process }&quot;" />
+
+    <!-- Copy DLL to plugins/<ProjectName> -->
+    <Copy 
+      SourceFiles="$(TargetDir)$(TargetName).dll" 
+      DestinationFolder="$(SilksongPath)\BepInEx\plugins\$(TargetName)" 
+      OverwriteReadOnlyFiles="true" />
+
+        <!-- Collect all files under rsc\textures -->
+    <ItemGroup>
+      <TextureFiles Include="rsc\textures\**\*.*" />
+    </ItemGroup>
+
+    <!-- Copy rsc\textures to plugins\<ProjectName>\rsc\textures -->
+    <Copy 
+      SourceFiles="@(TextureFiles)" 
+      DestinationFiles="@(TextureFiles->'$(SilksongPath)\BepInEx\plugins\$(TargetName)\rsc\textures\%(RecursiveDir)%(Filename)%(Extension)')" 
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" />
+
+
+    <!-- Launch Steam game via its AppID -->
+    <Exec Command="start steam://rungameid/1030300" />
+  </Target>
+
+
+
+
+
+  
+
+</Project>
