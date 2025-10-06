@@ -12,6 +12,8 @@ namespace owd.EasyQuests
             Instance = this;
 
             PluginLogger.Init(Config);
+
+            QuestDatabase.LoadFromJson("BepInEx/plugins/EasyQuests/quests.json");
             
             Conf.Init(Config);
 

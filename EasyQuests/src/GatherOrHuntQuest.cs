@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-
+using System;
 namespace owd.EasyQuests
 {
     /// <summary>
@@ -12,24 +12,7 @@ namespace owd.EasyQuests
         {
             var list_ = QuestManager.GetAllQuests();
 
-            PluginLogger.LogInfo($"FullQuestBase list");
-
-            foreach (BasicQuestBase bqb in list_)
-            {
-                if (bqb is FullQuestBase fq)
-                {
-
-                    if (fq.QuestType.name == "Gather" || fq.QuestType.name == "Hunt")
-                    {
-                        PluginLogger.LogInfo($"Found quest:\n" +
-                        $"Name: {fq.name}\n" +
-                        $"Type: {fq.QuestType.name}");
-                    }
-                }
-            }
-            
-            PluginLogger.LogInfo($"\n\n\n");
-            PluginLogger.LogInfo($"Quest list");
+            string str = "Quest list:\n";
 
             foreach (BasicQuestBase bqb in list_)
             {
@@ -37,20 +20,26 @@ namespace owd.EasyQuests
                 {
                     if (q.QuestType.name == "Gather" || q.QuestType.name == "Hunt")
                     {
-                        string str = "Found quest:\n";
-                        str += $"Name: {q.name}\n";
-                        str += $"Type: {q.QuestType.name}";
-                        str += "Target Amount:\n";
+                        str += "-- Found quest:\n";
+                        str += $"---- Name: {q.name}\n";
+                        str += $"------ Type: {q.QuestType.name}\n";
+                        str += "------ Targets:\n";
 
-                        foreach (FullQuestBase.QuestTarget t in q.Targets)
+                        foreach (FullQuestBase.QuestTarget target in q.Targets)
                         {
-                            str += $"{t.Count}\n";
+                            QuestTargetCounter questTargetCounter = target.Counter;
+
+                            str += $"-------- Target Counter Name: {questTargetCounter.name}\n";
+                            str += $"---------- Target Amount: {target.Count}\n";
+
+                            str += $"---------- Class or struct Name: {questTargetCounter?.GetType().FullName ?? "<null>"}\n";
                         }
 
-                        PluginLogger.LogInfo(str);
+                        str += "\n";
                     }
                 }
             }
+            PluginLogger.LogInfo(str);
         }
         /// <summary>
         /// Represents a single quest definition.
@@ -134,6 +123,77 @@ namespace owd.EasyQuests
         {
             questsByCollectable.TryGetValue(collectableName, out var quest);
             return quest;
+        }
+
+
+        /// <summary>
+        /// Finds the target amount by its counter name across all quests.
+        /// Returns -1 if not found.
+        /// </summary>
+        public static int GetTargetAmount(string questCounterName)
+        {
+            if (string.IsNullOrWhiteSpace(questCounterName))
+                return -1;
+
+            foreach (var quest in QuestDatabase.Quests)
+            {
+                foreach (var target in quest.Targets)
+                {
+                    if (target.CounterName.Equals(questCounterName, StringComparison.OrdinalIgnoreCase))
+                        return target.Amount;
+                }
+            }
+
+            return -1;
+        }
+
+        // public static bool IsQuestActive(string questCounterName)
+        // {
+        //     var activeQuests = QuestManager.GetActiveQuests();
+
+        //     List<QuestData> listQuestData = null;
+
+        //     bool found = QuestDatabase.QuestsByCounterName.TryGetValue(questCounterName, out listQuestData);
+
+        //     if (!found)
+        //         return false;
+
+        //     foreach (var activeQuest in activeQuests)
+        //     {
+        //         foreach (var questData in listQuestData)
+        //         {
+        //             if (questData.Name == activeQuest.name)
+        //             {
+        //                 return true;
+        //             }
+        //         }
+        //     }
+
+        //     return false;
+        // }
+        public static List<(QuestData questData, FullQuestBase fullQuestBase)> GetListQuestsActiveAndNotCompleteAndNotAtTargetCount()
+        {
+            var activeQuests = QuestManager.GetActiveQuests();
+
+            List<(QuestData questData, FullQuestBase fullQuestBase)> result = new List<(QuestData, FullQuestBase)>();
+
+            foreach (QuestData qd in QuestDatabase.Quests)
+            {
+                if (qd.Targets.Count != 0)
+                {
+                    foreach (FullQuestBase fullQuestBase in activeQuests)
+                    {
+                        if (qd.Name == fullQuestBase.name &&
+                            !fullQuestBase.CanComplete &&
+                            !fullQuestBase.IsCompleted)
+                        {
+                            result.Add((qd, fullQuestBase));
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

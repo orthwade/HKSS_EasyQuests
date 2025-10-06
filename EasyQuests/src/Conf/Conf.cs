@@ -4,9 +4,7 @@ namespace owd.EasyQuests
 {
     internal static class Conf
     {
-        private static ConfigEntry<bool> enabledEntry;
-        public static bool IsModEnabled() { return enabledEntry.Value; }
-        public enum QuestModifyMode { AutoComplete, OnlyOnePickRequired, Multiplier };
+        public enum QuestModifyMode { AutoComplete, OnlyOnePickRequired, Multiplier, Disabled };
 
         private static ConfigEntry<QuestModifyMode> questModifyModeEntry;
         public static QuestModifyMode GetMode() { return questModifyModeEntry.Value; }
@@ -15,16 +13,6 @@ namespace owd.EasyQuests
 
         public static void Init(ConfigFile config)
         {
-            enabledEntry = config.Bind(
-                "00 -- General",
-                "Enabled",
-                false,
-                 new ConfigDescription(
-                    "Is mod enabled",
-                    null,
-                    new ConfigurationManagerAttributes { Order = -1 }
-                )
-            );
             questModifyModeEntry = config.Bind(
                 "00 -- General",
                 "QuestModifyMode",
@@ -35,6 +23,10 @@ namespace owd.EasyQuests
                     new ConfigurationManagerAttributes { Order = -2 }
                 )
             );
+            questModifyModeEntry.SettingChanged += (_, __) =>
+            {
+                CheckAndApplyAutoComplete.Do();
+            };
             multiplierEntry = config.Bind(
                 "00 -- General",
                 "Multiplier",
@@ -46,6 +38,5 @@ namespace owd.EasyQuests
                 )
             );
         }
-       
     }
 }

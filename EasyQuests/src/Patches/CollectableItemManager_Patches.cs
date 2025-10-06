@@ -9,7 +9,7 @@ namespace owd.EasyQuests.HarmonyPatches
     {
         private static bool Prefix(CollectableItem item, ref int amount)
         {
-            if (!Conf.IsModEnabled())
+            if (Conf.GetMode() == Conf.QuestModifyMode.Disabled)
             {
                 PluginLogger.LogWarning("CollectableItemManager_AddItem_Patch Prefix: mod is disabled. Skip patch");
                 return true;
@@ -23,12 +23,17 @@ namespace owd.EasyQuests.HarmonyPatches
                 return true;
             }
 
+            PluginLogger.LogInfo($"CollectableItemManager_AddItem_Patch_Prefix. Item name: {item.name}");
+
             PluginLogger.LogInfo($"Amount before to add before modifications: {amount}");
 
             if (amount > 0)
             {
-                if (!(bool)item.UseQuestForCap)
+                Conf.QuestModifyMode mode = Conf.GetMode();
+
+                if (mode == Conf.QuestModifyMode.AutoComplete)
                 {
+                    PluginLogger.LogWarning("CollectableItemManager_AddItem_Patch. Using mode AutoComplete. Skip patch.");
                     return true;
                 }
 
@@ -37,17 +42,12 @@ namespace owd.EasyQuests.HarmonyPatches
                 if (key == null)
                     return true;
 
-                GatherOrHuntQuest.Data? questData = GatherOrHuntQuest.FindByCollectableName(key);
-
-                if (questData == null)
+                int val_1 = GatherOrHuntQuest.GetTargetAmount(key);
+                if (val_1 < 1)
                 {
-                    PluginLogger.LogWarning($"Not found questData for collectable name: {key}");
+                    PluginLogger.LogWarning("CollectableItemManager_AddItem_Patch. item is not in QuestDatabase");
                     return true;
                 }
-
-                Conf.QuestModifyMode mode = Conf.GetMode();
-
-                int val_1 = questData.TargetAmount;
                 int val_0 = item.CollectedAmount;
 
                 int toTarget = val_1 - val_0;
@@ -64,21 +64,16 @@ namespace owd.EasyQuests.HarmonyPatches
 
                     amount = toTarget;
                 }
-                else if (mode == Conf.QuestModifyMode.AutoComplete)
-                {
-                    PluginLogger.LogWarning("CollectableItemManager_AddItem_Patch. Using mode AutoComplete. Skip patch.");
-                    return true;
-                }
                 else
                 {
-                    PluginLogger.LogWarning("CollectableItemManager_AddItem_Patch. Something is terribly wrong.");
+                    PluginLogger.LogError("CollectableItemManager_AddItem_Patch. Something is terribly wrong.");
                     return true;
                 }
 
                 PluginLogger.LogInfo("Patching CollectableItemManager_AddItem amount\n" +
                 $"Collectable Amount before add: {val_0}\n" +
                 $"Collectable Amount Target: {val_1}\n" +
-                $"New add amount(amount var):{amount}");
+                $"New add amount(amount var): {amount}");
             }
 
             return true;

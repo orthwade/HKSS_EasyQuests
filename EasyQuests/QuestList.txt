@@ -1,0 +1,149 @@
+---- Name: Pilgrim Rags
+------ Type: Hunt
+------ Targets:
+-------- Target Counter Name: Pilgrim Rag
+---------- Target Amount: 12
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Mossberry Collection Pre
+------ Type: Gather
+------ Targets:
+
+---- Name: Mossberry Collection 1
+------ Type: Gather
+------ Targets:
+-------- Target Counter Name: Mossberry
+---------- Target Amount: 3
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Rock Rollers
+------ Type: Hunt
+------ Targets:
+-------- Target Counter Name: Rock Roller Item
+---------- Target Amount: 3
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Brolly Get
+------ Type: Hunt
+------ Targets:
+-------- Target Counter Name: Common Spine
+---------- Target Amount: 25
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Shiny Bell Goomba
+------ Type: Gather
+------ Targets:
+-------- Target Counter Name: Silver Bellclapper
+---------- Target Amount: 8
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Crow Feathers Pre
+------ Type: Hunt
+------ Targets:
+
+---- Name: Crow Feathers
+------ Type: Hunt
+------ Targets:
+-------- Target Counter Name: Crow Feather
+---------- Target Amount: 25
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Shell Flowers
+------ Type: Gather
+------ Targets:
+-------- Target Counter Name: Shell Flower
+---------- Target Amount: 6
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Extractor Blue
+------ Type: Gather
+------ Targets:
+-------- Target Counter Name: Plasmium
+---------- Target Amount: 3
+---------- Class or struct Name: CollectableItemBasic
+-------- Target Counter Name: Extractor
+---------- Target Amount: 1
+---------- Class or struct Name: ToolItemBasic
+
+---- Name: Extractor Blue Worms
+------ Type: Gather
+------ Targets:
+-------- Target Counter Name: Plasmium Blood
+---------- Target Amount: 10
+---------- Class or struct Name: CollectableItemBasic
+-------- Target Counter Name: Extractor
+---------- Target Amount: 1
+---------- Class or struct Name: ToolItemBasic
+
+---- Name: Roach Killing
+------ Type: Hunt
+------ Targets:
+-------- Target Counter Name: Roach Corpse Item
+---------- Target Amount: 10
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Fine Pins
+------ Type: Hunt
+------ Targets:
+-------- Target Counter Name: Fine Pin
+---------- Target Amount: 10
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Song Pilgrim Cloaks
+------ Type: Hunt
+------ Targets:
+-------- Target Counter Name: Song Pilgrim Cloak
+---------- Target Amount: 15
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Great Gourmand
+------ Type: Gather
+------ Targets:
+-------- Target Counter Name: Mossberry Stew
+---------- Target Amount: 1
+---------- Class or struct Name: CollectableItemBasic
+-------- Target Counter Name: Vintage Nectar
+---------- Target Amount: 1
+---------- Class or struct Name: CollectableItemBasic
+-------- Target Counter Name: Courier Supplies Gourmand
+---------- Target Amount: 1
+---------- Class or struct Name: DeliveryQuestItemStandalone
+-------- Target Counter Name: Coral Ingredient
+---------- Target Amount: 1
+---------- Class or struct Name: CollectableItemBasic
+-------- Target Counter Name: Pickled Roach Egg
+---------- Target Amount: 1
+---------- Class or struct Name: CollectableItemBasic
+
+---- Name: Huntress Quest
+------ Type: Hunt
+------ Targets:
+-------- Target Counter Name: Enemy Morsel Seared
+---------- Target Amount: 15
+---------- Class or struct Name: CollectableItemToolDamage
+-------- Target Counter Name: Enemy Morsel Shredded
+---------- Target Amount: 35
+---------- Class or struct Name: CollectableItemToolDamage
+-------- Target Counter Name: Enemy Morsel Speared
+---------- Target Amount: 10
+---------- Class or struct Name: CollectableItemToolDamage
+
+---- Name: Huntress Quest Runt
+------ Type: Hunt
+------ Targets:
+-------- Target Counter Name: Enemy Morsel Seared
+---------- Target Amount: 15
+---------- Class or struct Name: CollectableItemToolDamage
+-------- Target Counter Name: Enemy Morsel Shredded
+---------- Target Amount: 35
+---------- Class or struct Name: CollectableItemToolDamage
+-------- Target Counter Name: Enemy Morsel Speared
+---------- Target Amount: 10
+---------- Class or struct Name: CollectableItemToolDamage
+
+---- Name: Destroy Thread Cores
+------ Type: Hunt
+------ Targets:
+-------- Target Counter Name: Black Thread Core
+---------- Target Amount: 12
+---------- Class or struct Name: EnemyJournalRecord

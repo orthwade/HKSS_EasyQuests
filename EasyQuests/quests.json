@@ -1,0 +1,152 @@
+[
+  {
+    "Name": "Pilgrim Rags",
+    "DisplayName": "Garb of the Pilgrims",
+    "Type": "Hunt",
+    "Targets": [
+      { "CounterName": "Pilgrim Rag", "Amount": 12, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Mossberry Collection Pre",
+    "DisplayName": "Berry Picking",
+    "Type": "Gather",
+    "Targets": []
+  },
+  {
+    "Name": "Mossberry Collection 1",
+    "DisplayName": "Berry Picking",
+    "Type": "Gather",
+    "Targets": [
+      { "CounterName": "Mossberry", "Amount": 3, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Rock Rollers",
+    "DisplayName": "Volatile Flintbeetles",
+    "Type": "Hunt",
+    "Targets": [
+      { "CounterName": "Rock Roller Item", "Amount": 3, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Brolly Get",
+    "DisplayName": "Flexile Spines",
+    "Type": "Hunt",
+    "Targets": [
+      { "CounterName": "Common Spine", "Amount": 25, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Shiny Bell Goomba",
+    "DisplayName": "Silver Bells",
+    "Type": "Gather",
+    "Targets": [
+      { "CounterName": "Silver Bellclapper", "Amount": 8, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Crow Feathers Pre",
+    "DisplayName": "Crawbug Clearing",
+    "Type": "Hunt",
+    "Targets": []
+  },
+  {
+    "Name": "Crow Feathers",
+    "DisplayName": "Crawbug Clearing",
+    "Type": "Hunt",
+    "Targets": [
+      { "CounterName": "Crow Feather", "Amount": 25, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Shell Flowers",
+    "DisplayName": "Rite of the Pollip",
+    "Type": "Gather",
+    "Targets": [
+      { "CounterName": "Shell Flower", "Amount": 6, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Extractor Blue",
+    "DisplayName": "Alchemist’s Assistant",
+    "Type": "Gather",
+    "Targets": [
+      { "CounterName": "Plasmium", "Amount": 3, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" },
+      { "CounterName": "Extractor", "Amount": 1, "CounterClassName": "ToolItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Extractor Blue Worms",
+    "DisplayName": "Advanced Alchemy",
+    "Type": "Gather",
+    "Targets": [
+      { "CounterName": "Plasmium Blood", "Amount": 10, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" },
+      { "CounterName": "Extractor", "Amount": 1, "CounterClassName": "ToolItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Roach Killing",
+    "DisplayName": "Roach Guts",
+    "Type": "Hunt",
+    "Targets": [
+      { "CounterName": "Roach Corpse Item", "Amount": 10, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Fine Pins",
+    "DisplayName": "Fine Pins",
+    "Type": "Hunt",
+    "Targets": [
+      { "CounterName": "Fine Pin", "Amount": 10, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Song Pilgrim Cloaks",
+    "DisplayName": "Cloaks of the Choir",
+    "Type": "Hunt",
+    "Targets": [
+      { "CounterName": "Song Pilgrim Cloak", "Amount": 15, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Great Gourmand",
+    "DisplayName": "Great Taste of Pharloom",
+    "Type": "Gather",
+    "Targets": [
+      { "CounterName": "Mossberry Stew", "Amount": 1, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" },
+      { "CounterName": "Vintage Nectar", "Amount": 1, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" },
+      { "CounterName": "Courier Supplies Gourmand", "Amount": 1, "CounterClassName": "DeliveryQuestItemStandalone", "TargetType": "Item" },
+      { "CounterName": "Coral Ingredient", "Amount": 1, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" },
+      { "CounterName": "Pickled Roach Egg", "Amount": 1, "CounterClassName": "CollectableItemBasic", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Huntress Quest",
+    "DisplayName": "Broodfeast",
+    "Type": "Hunt",
+    "Targets": [
+      { "CounterName": "Enemy Morsel Seared", "Amount": 15, "CounterClassName": "CollectableItemToolDamage", "TargetType": "Item" },
+      { "CounterName": "Enemy Morsel Shredded", "Amount": 35, "CounterClassName": "CollectableItemToolDamage", "TargetType": "Item" },
+      { "CounterName": "Enemy Morsel Speared", "Amount": 10, "CounterClassName": "CollectableItemToolDamage", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Huntress Quest Runt",
+    "DisplayName": "Broodfeast",
+    "Type": "Hunt",
+    "Targets": [
+      { "CounterName": "Enemy Morsel Seared", "Amount": 15, "CounterClassName": "CollectableItemToolDamage", "TargetType": "Item" },
+      { "CounterName": "Enemy Morsel Shredded", "Amount": 35, "CounterClassName": "CollectableItemToolDamage", "TargetType": "Item" },
+      { "CounterName": "Enemy Morsel Speared", "Amount": 10, "CounterClassName": "CollectableItemToolDamage", "TargetType": "Item" }
+    ]
+  },
+  {
+    "Name": "Destroy Thread Cores",
+    "DisplayName": "Dark Hearts",
+    "Type": "Hunt",
+    "Targets": [
+      { "CounterName": "Black Thread Core", "Amount": 12, "CounterClassName": "EnemyJournalRecord", "TargetType": "Enemy" }
+    ]
+  }
+]

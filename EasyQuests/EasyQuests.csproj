@@ -55,6 +55,7 @@
 
   <ItemGroup>
     <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="22.7.31.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
   <PropertyGroup>
     <!-- Read from environment variable SILKSONG_PATH if available -->
@@ -62,31 +63,44 @@
   </PropertyGroup>
 
   <Target Name="CopyToSteam" AfterTargets="Build" Condition="'$(SilksongPath)' != ''">
-    <!-- Check if Hollow Knight Silksong.exe is running -->
+    <!-- Kill the game if running -->
     <Exec Command="powershell -Command &quot;if (Get-Process -Name 'Hollow Knight Silksong' -ErrorAction SilentlyContinue) { Stop-Process -Name 'Hollow Knight Silksong' -Force -PassThru | Wait-Process }&quot;" />
 
-    <!-- Copy DLL to plugins/<ProjectName> -->
+    <!-- Copy plugin DLL -->
     <Copy 
-      SourceFiles="$(TargetDir)$(TargetName).dll" 
-      DestinationFolder="$(SilksongPath)\BepInEx\plugins\$(TargetName)" 
+      SourceFiles="$(TargetDir)$(TargetName).dll"
+      DestinationFolder="$(SilksongPath)\BepInEx\plugins\$(TargetName)"
       OverwriteReadOnlyFiles="true" />
 
-        <!-- Collect all files under rsc\textures -->
+    <!-- Copy quests.json if it exists -->
+    <ItemGroup>
+      <QuestJson Include="quests.json" />
+    </ItemGroup>
+
+    <Copy 
+      SourceFiles="@(QuestJson)" 
+      DestinationFolder="$(SilksongPath)\BepInEx\plugins\$(TargetName)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true"
+      Condition="Exists('quests.json')" />
+
+    <!-- Collect all files under rsc\textures -->
     <ItemGroup>
       <TextureFiles Include="rsc\textures\**\*.*" />
     </ItemGroup>
 
-    <!-- Copy rsc\textures to plugins\<ProjectName>\rsc\textures -->
+    <!-- Copy textures -->
     <Copy 
       SourceFiles="@(TextureFiles)" 
       DestinationFiles="@(TextureFiles->'$(SilksongPath)\BepInEx\plugins\$(TargetName)\rsc\textures\%(RecursiveDir)%(Filename)%(Extension)')" 
-      SkipUnchangedFiles="true"
+      SkipUnchangedFiles="true" 
       OverwriteReadOnlyFiles="true" />
 
-
-    <!-- Launch Steam game via its AppID -->
+    <!-- Launch Steam game -->
     <Exec Command="start steam://rungameid/1030300" />
   </Target>
+
+
 
 
 
