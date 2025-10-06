@@ -3,7 +3,7 @@ using HarmonyLib;
 
 namespace owd.EasyQuests
 {
-    [BepInPlugin("com.orthwade.EasyQuests", "Easy Quests", "0.1.0")]
+    [BepInPlugin("com.orthwade.EasyQuests", "Easy Quests", "0.2.0")]
     public class EasyQuests : BaseUnityPlugin
     {
         internal static EasyQuests Instance;
