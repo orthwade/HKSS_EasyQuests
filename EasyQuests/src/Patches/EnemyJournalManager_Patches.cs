@@ -21,7 +21,7 @@ namespace owd.EasyQuests.HarmonyPatches
             if (suppressPatch)
                 return;
 
-            Conf.QuestModifyMode mode = Conf.GetMode();
+            Conf.QuestModifyMode mode = Conf.ResolveModeByCounterName(journalRecord.name);
 
             int amount = 0;
 

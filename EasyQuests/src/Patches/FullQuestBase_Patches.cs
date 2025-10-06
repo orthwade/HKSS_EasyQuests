@@ -107,11 +107,23 @@ namespace owd.EasyQuests.Patches
                 return;
             }
 
-            var mode = Conf.GetMode();
+            if(__instance.name == null)
+            {
+                PluginLogger.LogWarning("FullQuestBase_BeginQuest_Patch: __instance.name is null. Skipping.");
+                return;
+            }
+
+            if(__instance.name.Length == 0)
+            {
+                PluginLogger.LogWarning("FullQuestBase_BeginQuest_Patch: __instance.name is empty. Skipping.");
+                return;
+            }
+
+            var mode = Conf.ResolveModeByQuestInternalName(__instance.name);
 
             if (mode == Conf.QuestModifyMode.Disabled)
             {
-                PluginLogger.LogInfo("FullQuestBase_BeginQuest_Patch: mod disabled. Skipping.");
+                PluginLogger.LogInfo("FullQuestBase_BeginQuest_Patch: mod disabled or quest is not found. Skipping.");
                 return;
             }
 

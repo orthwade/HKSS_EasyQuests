@@ -9,11 +9,6 @@ namespace owd.EasyQuests.HarmonyPatches
     {
         private static bool Prefix(CollectableItem item, ref int amount)
         {
-            if (Conf.GetMode() == Conf.QuestModifyMode.Disabled)
-            {
-                PluginLogger.LogWarning("CollectableItemManager_AddItem_Patch Prefix: mod is disabled. Skip patch");
-                return true;
-            }
             PluginLogger.LogInfo("CollectableItemManager_AddItem_Patch Prefix");
 
             if (item == null)
@@ -29,15 +24,21 @@ namespace owd.EasyQuests.HarmonyPatches
 
             if (amount > 0)
             {
-                Conf.QuestModifyMode mode = Conf.GetMode();
+                string key = item.name;
+
+                Conf.QuestModifyMode mode = Conf.ResolveModeByCounterName(key);
+
+                if (mode == Conf.QuestModifyMode.Disabled)
+                {
+                    PluginLogger.LogWarning("CollectableItemManager_AddItem_Patch Prefix: disabled or not found. Skip patch");
+                    return true;
+                }
 
                 if (mode == Conf.QuestModifyMode.AutoComplete)
                 {
                     PluginLogger.LogWarning("CollectableItemManager_AddItem_Patch. Using mode AutoComplete. Skip patch.");
                     return true;
                 }
-
-                string key = item.name;
 
                 if (key == null)
                     return true;

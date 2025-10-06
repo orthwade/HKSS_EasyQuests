@@ -8,51 +8,55 @@ namespace owd.EasyQuests
             {
                 return;
             }
-            
-            if (Conf.GetMode() == Conf.QuestModifyMode.AutoComplete)
+
+            var list = GatherOrHuntQuest.GetListQuestsActiveAndNotCompleteAndNotAtTargetCount();
+
+            foreach (var (questData, fullQuestBase) in list)
             {
-                PluginLogger.LogInfo("HeroController_Start_Patch Postfix.\nMode AutoComplete. Attempting");
-
-                var list = GatherOrHuntQuest.GetListQuestsActiveAndNotCompleteAndNotAtTargetCount();
-
-                foreach (var (questData, fullQuestBase) in list)
+                if (Conf.ResolveModeByQuestInternalName(questData.Name) != Conf.QuestModifyMode.AutoComplete)
                 {
-                    foreach (QuestTargetData questTargetData in questData.Targets)
+                    PluginLogger.LogInfo($"HeroController_Start_Patch Postfix.\n Quest name:{questData.Name}; skip");
+
+                    continue;
+                }
+
+                PluginLogger.LogInfo($"HeroController_Start_Patch Postfix.\n Quest name:{questData.Name}; Attempting AutoComplete");
+
+                foreach (QuestTargetData questTargetData in questData.Targets)
+                {
+                    if (typeof(CollectableItem).IsAssignableFrom(questTargetData.CounterClassType))
                     {
-                        if (typeof(CollectableItem).IsAssignableFrom(questTargetData.CounterClassType))
+                        var items = CollectableItemManager.Instance.GetAllCollectables();
+
+                        foreach (CollectableItem item in items)
                         {
-                            var items = CollectableItemManager.Instance.GetAllCollectables();
-
-                            foreach (CollectableItem item in items)
+                            if (item != null && item.name == questTargetData.CounterName)
                             {
-                                if (item != null && item.name == questTargetData.CounterName)
+                                int amount = questTargetData.Amount - item.CollectedAmount;
+
+                                if (amount > 0)
                                 {
-                                    int amount = questTargetData.Amount - item.CollectedAmount;
+                                    PluginLogger.LogInfo("HeroController_Start_Patch Postfix.\n Attempting AddItem");
 
-                                    if (amount > 0)
-                                    {
-                                        PluginLogger.LogInfo("HeroController_Start_Patch Postfix.\n Attempting AddItem");
-
-                                        CollectableItemManager.AddItem(item, amount);
-                                    }
-                                    break;
+                                    CollectableItemManager.AddItem(item, amount);
                                 }
+                                break;
                             }
                         }
-                        else if (typeof(EnemyJournalRecord).IsAssignableFrom(questTargetData.CounterClassType))
+                    }
+                    else if (typeof(EnemyJournalRecord).IsAssignableFrom(questTargetData.CounterClassType))
+                    {
+                        var record = EnemyJournalManager.GetRecord(questTargetData.CounterName);
+
+                        int amount = questTargetData.Amount - record.KillCount;
+
+                        if (amount > 0)
                         {
-                            var record = EnemyJournalManager.GetRecord(questTargetData.CounterName);
+                            PluginLogger.LogInfo("HeroController_Start_Patch Postfix.\n Attempting RecordKill");
 
-                            int amount = questTargetData.Amount - record.KillCount;
-
-                            if (amount > 0)
+                            for (int i = 0; i < amount; ++i)
                             {
-                                PluginLogger.LogInfo("HeroController_Start_Patch Postfix.\n Attempting RecordKill");
-
-                                for (int i = 0; i < amount; ++i)
-                                {
-                                    EnemyJournalManager.RecordKill(record, false, false);
-                                }
+                                EnemyJournalManager.RecordKill(record, false, false);
                             }
                         }
                     }
