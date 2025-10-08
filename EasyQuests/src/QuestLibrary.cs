@@ -159,6 +159,38 @@ namespace owd.EasyQuests
             PrintAllQuestsByDisplayName();
         }
 
+        public static void LoadFromJsonString(string json)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new StringEnumConverter());
+
+            var loaded = JsonConvert.DeserializeObject<List<QuestData>>(json, settings);
+            Quests = loaded ?? new List<QuestData>();
+
+            foreach (var quest in Quests)
+            {
+                if (quest.Targets == null)
+                    continue;
+
+                foreach (var target in quest.Targets)
+                {
+                    if (!string.IsNullOrWhiteSpace(target.CounterClassName))
+                    {
+                        target.CounterClassType = ResolveType(target.CounterClassName);
+                    }
+
+                    if (!Enum.IsDefined(typeof(TargetType), target.TargetType))
+                    {
+                        target.TargetType = TargetType.Item;
+                    }
+                }
+            }
+
+            BuildDictionaries();
+            PrintAllQuestsByCounterName();
+            PrintAllQuestsByDisplayName();
+        }
+
         private static void BuildDictionaries()
         {
             QuestsByCounterName = BuildCounterDictionary();

@@ -1,5 +1,9 @@
 ﻿using BepInEx;
 using HarmonyLib;
+using Mono.Cecil;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace owd.EasyQuests
 {
@@ -13,7 +17,14 @@ namespace owd.EasyQuests
 
             PluginLogger.Init(Config);
 
-            QuestDatabase.LoadFromJson("BepInEx/plugins/EasyQuests/quests.json");
+            // Load the embedded quests.json directly into a string
+            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("EasyQuests.quests.json");
+            using var reader = new StreamReader(stream);
+            string json = reader.ReadToEnd();
+
+            // Now feed it to your existing logic (just slightly adjusted)
+            QuestDatabase.LoadFromJsonString(json);
+
             
             Conf.Init(Config);
 

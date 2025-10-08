@@ -52,6 +52,11 @@
     </Reference>
     <!-- ImageConversionModule intentionally omitted to avoid netstandard 2.1 vs 2.0 conflict (CS1705). -->
   </ItemGroup>
+      
+      <ItemGroup>
+      <EmbeddedResource Include="quests.json" />
+    </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="MonoMod.RuntimeDetour.HookGen" Version="22.7.31.1" />
@@ -73,16 +78,14 @@
       OverwriteReadOnlyFiles="true" />
 
     <!-- Copy quests.json if it exists -->
-    <ItemGroup>
-      <QuestJson Include="quests.json" />
-    </ItemGroup>
 
-    <Copy 
+
+    <!-- <Copy 
       SourceFiles="@(QuestJson)" 
       DestinationFolder="$(SilksongPath)\BepInEx\plugins\$(TargetName)"
       SkipUnchangedFiles="true"
       OverwriteReadOnlyFiles="true"
-      Condition="Exists('quests.json')" />
+      Condition="Exists('quests.json')" /> -->
 
     <!-- Collect all files under rsc\textures -->
     <ItemGroup>
